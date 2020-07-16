@@ -49,7 +49,8 @@ void* multi(void* arg)
               }
           }    
       }        
-  }   
+  }
+  free(arg_thread);   
 } 
 
 
