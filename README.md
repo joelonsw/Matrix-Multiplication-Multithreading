@@ -8,12 +8,11 @@
 4. Using SIMD (data-level-parallelism) -- dns_tiling64_avx512.cpp
 
 ### Settings
-Compile option : g++ -mavx -pthread -fstrict-aliasing file.cpp -o file –lrt (g++ version 7.5.0)
-OS : Linux version 4.15.0-76-generic (buildd@lcy01-amd64-029) (gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)) #86-Ubuntu SMP
-CPU : Intel® Xeon® Silver  4210 CPU @ 2.20GHz
-Perf : perf version 4.15.18
-
-Matrix size: 4096
+Compile option : g++ -mavx -pthread -fstrict-aliasing file.cpp -o file –lrt (g++ version 7.5.0) <br>
+OS : Linux version 4.15.0-76-generic (buildd@lcy01-amd64-029) (gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)) #86-Ubuntu SMP <br>
+CPU : Intel® Xeon® Silver  4210 CPU @ 2.20GHz <br>
+Perf : perf version 4.15.18 <br>
+Matrix size: 4096 <br>
 
 ### Execution result
 -unopt.cpp
