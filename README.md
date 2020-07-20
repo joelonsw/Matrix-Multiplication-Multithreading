@@ -2,14 +2,14 @@
 
 ### Optimization of Matrix Multication using following technics
 <div>
-1. Cache friendly multiplication (Indexing) -- kij.cpp <br>
+*1. Cache friendly multiplication (Indexing) -- kij.cpp * <br>
 The first step is indexing. <br>
 Because the elements of the array are stored in consecutive addresses, I thought that column-wise memory access should be avoided.
 Therefore, I replaced the original IJK method with the KIJ method.
 </div>
 <br>
 <div>
-2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp <br>
+*2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp* <br>
 
 The second step is multi-threading. <br>
 I came up with the idea after studying Cannon and DNS algorithm from the textbook. 
@@ -30,7 +30,7 @@ The third and fourth steps follow a similar process, and then end the function.<
 </div>
 <br>
 <div>
-3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp <br>
+*3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp* <br>
 The third step is tiling. <br>
 Although parallel processing was carried out through DNS algorithm, LLC miss rate could not be improved because the multi function remained KIJ method as it is.<br>
 To improve this, I introduce the Tiling method. <br>
@@ -44,12 +44,14 @@ To prevent this, I introduced the Tiling method, which is to efficiently write t
 </div>
 <br>
 <div>
-<br>4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp <br>
+*4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp* <br>
 As a last step, I used SIMD using intrinsics.<br>
 Two things have changed since using SIMD.<br>
 First, the number of instruction decreased noticeably with each use of sse, avx, and avx512.<br>
 Second, when using AVX512, the clock rate decreased compared to when using SISD/SSE/AVX.<br>
 </div>
+<br>
+
 ### Settings
 Compile option : g++ -mavx -pthread -fstrict-aliasing file.cpp -o file –lrt (g++ version 7.5.0) <br>
 OS : Linux version 4.15.0-76-generic <br>
