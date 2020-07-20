@@ -13,6 +13,7 @@ Therefore, I replaced the original IJK method with the KIJ method.
 The second step is multi-threading. <br>
 I came up with the idea after studying Cannon and DNS algorithm from the textbook. 
 The algorithm is as follows. 
+  
 ![알고설명](https://user-images.githubusercontent.com/61370901/87932630-c96e3600-cac6-11ea-93f7-43cadc23601a.png)
 <br>
 Divide A and B into 16 pieces. <br>
