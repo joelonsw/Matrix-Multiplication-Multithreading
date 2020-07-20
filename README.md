@@ -19,7 +19,7 @@ The result array is the product of A's row, B's column, and the elements are obt
 For example, the first piece of the Result matrix is represented by the product of A's first row and B's first column. 
 All 16 columns of the other results can be expressed like this. 
 <br>
-This is where parallelization takes place. Create 16 threads and allocate proper operation for each thread 0~15 to results from 0~15. 
+This is where parallelization takes place. Create 16 threads and allocate proper operation for each thread 0-15 to results from 0-15. 
 In the first step, one of the 16 divided A and B matrices in the upper left corner of my picture is multiplied. 
 When 16 threads complete their respective operations, the threads join. 
 In the second step, I create 16 threads to do the operation located in the upper right corner of the picture and join them when finished. 
@@ -35,7 +35,8 @@ To improve this, I introduce the Tiling method. <br>
 As you access memory in the matrix, if you navigate with the left picture, if the size of the matrix is larger than the size of the cache, then it will not remain in the cache when you access the first element of the matrix again after navigating the matrix.
 To prevent this, I introduced the Tiling method, which is to efficiently write the cache by performing all the operations on the array when it remains in the cache.
 <br>
-4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp <br>
+
+<br>4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp <br>
 As a last step, I used SIMD using intrinsics.<br>
 Two things have changed since using SIMD.
 First, the number of instruction decreased noticeably with each use of sse, avx, and avx512.
