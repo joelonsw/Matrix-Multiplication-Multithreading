@@ -3,9 +3,41 @@
 ### Optimization of Matrix Multication using following technics
 
 1. Cache friendly multiplication (Indexing) -- kij.cpp
-2. Multithreading with algorithm (thread-level-parallelism) -- dns.cpp
+The first step is indexing. 
+Because the elements of the array are stored in consecutive addresses, I thought that column-wise memory access should be avoided.
+Therefore, I replaced the original IJK method with the KIJ method.
+
+2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp
+The second step is multi-threading. 
+I came up with the idea after studying Cannon and DNS algorithm from the textbook. 
+The algorithm that I did matrix multiplication is as follows. 
+
+Divide A and B into 16 pieces. 
+The result array is the product of A's row, B's column, and the elements are obtained. 
+For example, the first piece of the Result matrix is represented by the product of A's first row and B's first column. 
+All 16 columns of the other results can be expressed like this. 
+![알고설명](https://user-images.githubusercontent.com/61370901/87932630-c96e3600-cac6-11ea-93f7-43cadc23601a.png)
+
+This is where parallelization takes place. Create 16 threads and allocate proper operation for each thread 0~15 to results from 0~15. 
+In the first step, one of the 16 divided A and B matrices in the upper left corner of my picture is multiplied. 
+When 16 threads complete their respective operations, the threads join. 
+In the second step, I create 16 threads to do the operation located in the upper right corner of the picture and join them when finished. 
+The third and fourth steps follow a similar process, and then end the function.
+
 3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp
-4. Using SIMD (data-level-parallelism) -- dns_tiling64_avx512.cpp
+The third step is tiling. 
+Although parallel processing was carried out through DNS algorithm, LLC miss rate could not be improved because the multi function remained KIJ method as it is.
+To improve this, I introduce the Tiling method. 
+![쭉](https://user-images.githubusercontent.com/61370901/87933085-911b2780-cac7-11ea-9d8f-93000d23bb85.png)
+![나눠서](https://user-images.githubusercontent.com/61370901/87933082-8fe9fa80-cac7-11ea-9dc1-2ede8fbeb632.png)
+As you access memory in the matrix, if you navigate with the left picture, if the size of the matrix is larger than the size of the cache, then it will not remain in the cache when you access the first element of the matrix again after navigating the matrix.
+To prevent this, I introduced the Tiling method, which is to efficiently write the cache by performing all the operations on the array when it remains in the cache.
+
+4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp
+As a last step, I used SIMD using intrinsics.
+Two things have changed since using SIMD.
+First, the number of instruction decreased noticeably with each use of sse, avx, and avx512.
+Second, when using AVX512, the clock rate decreased compared to when using SISD/SSE/AVX.
 
 ### Settings
 Compile option : g++ -mavx -pthread -fstrict-aliasing file.cpp -o file –lrt (g++ version 7.5.0) <br>
