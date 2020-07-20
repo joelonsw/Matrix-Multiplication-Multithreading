@@ -3,12 +3,12 @@
 ### Optimization of Matrix Multication using following technics
 
 1. Cache friendly multiplication (Indexing) -- kij.cpp <br>
-The first step is indexing. 
+The first step is indexing. <br>
 Because the elements of the array are stored in consecutive addresses, I thought that column-wise memory access should be avoided.
 Therefore, I replaced the original IJK method with the KIJ method.
 
 2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp <br>
-The second step is multi-threading. 
+The second step is multi-threading. <br>
 I came up with the idea after studying Cannon and DNS algorithm from the textbook. 
 The algorithm is as follows. 
 
@@ -26,7 +26,7 @@ In the second step, I create 16 threads to do the operation located in the upper
 The third and fourth steps follow a similar process, and then end the function.
 
 3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp <br>
-The third step is tiling. 
+The third step is tiling. <br>
 Although parallel processing was carried out through DNS algorithm, LLC miss rate could not be improved because the multi function remained KIJ method as it is.
 To improve this, I introduce the Tiling method. <br>
 ![쭉](https://user-images.githubusercontent.com/61370901/87933085-911b2780-cac7-11ea-9d8f-93000d23bb85.png)
@@ -34,9 +34,9 @@ To improve this, I introduce the Tiling method. <br>
 <br>
 As you access memory in the matrix, if you navigate with the left picture, if the size of the matrix is larger than the size of the cache, then it will not remain in the cache when you access the first element of the matrix again after navigating the matrix.
 To prevent this, I introduced the Tiling method, which is to efficiently write the cache by performing all the operations on the array when it remains in the cache.
-
+<br>
 4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp <br>
-As a last step, I used SIMD using intrinsics.
+As a last step, I used SIMD using intrinsics.<br>
 Two things have changed since using SIMD.
 First, the number of instruction decreased noticeably with each use of sse, avx, and avx512.
 Second, when using AVX512, the clock rate decreased compared to when using SISD/SSE/AVX.
