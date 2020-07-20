@@ -2,7 +2,7 @@
 
 ### Optimization of Matrix Multication using following technics
 <div>
-*1. Cache friendly multiplication (Indexing) -- kij.cpp * <br>
+_1. Cache friendly multiplication (Indexing) -- kij.cpp_ <br>
 The first step is indexing. <br>
 Because the elements of the array are stored in consecutive addresses, I thought that column-wise memory access should be avoided.
 Therefore, I replaced the original IJK method with the KIJ method.
@@ -21,7 +21,6 @@ Divide A and B into 16 pieces. <br>
 The result array is the product of A's row, B's column, and the elements are obtained. <br>
 For example, the first piece of the Result matrix is represented by the product of A's first row and B's first column. <br>
 All 16 columns of the other results can be expressed like this. <br>
-<br>
 This is where parallelization takes place. Create 16 threads and allocate proper operation for each thread 0-15 to results from 0-15. <br>
 In the first step, one of the 16 divided A and B matrices in the upper left corner of my picture is multiplied. <br>
 When 16 threads complete their respective operations, the threads join. <br>
