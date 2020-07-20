@@ -7,7 +7,7 @@ The first step is indexing. <br>
 Because the elements of the array are stored in consecutive addresses, I thought that column-wise memory access should be avoided.
 Therefore, I replaced the original IJK method with the KIJ method.
 </div>
-
+<br>
 <div>
 2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp <br>
 
@@ -28,18 +28,21 @@ When 16 threads complete their respective operations, the threads join. <br>
 In the second step, I create 16 threads to do the operation located in the upper right corner of the picture and join them when finished. <br>
 The third and fourth steps follow a similar process, and then end the function.<br>
 </div>
+<br>
 <div>
 3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp <br>
 The third step is tiling. <br>
 Although parallel processing was carried out through DNS algorithm, LLC miss rate could not be improved because the multi function remained KIJ method as it is.<br>
 To improve this, I introduce the Tiling method. <br>
-![쭉](https://user-images.githubusercontent.com/61370901/87933085-911b2780-cac7-11ea-9d8f-93000d23bb85.png)
+  
+![쭉](https://user-images.githubusercontent.com/61370901/87933085-911b2780-cac7-11ea-9d8f-93000d23bb85.png) 
 ![나눠서](https://user-images.githubusercontent.com/61370901/87933082-8fe9fa80-cac7-11ea-9dc1-2ede8fbeb632.png)
 <br>
 As you access memory in the matrix, if you navigate with the left picture, if the size of the matrix is larger than the size of the cache, then it will not remain in the cache when you access the first element of the matrix again after navigating the matrix.<br>
 To prevent this, I introduced the Tiling method, which is to efficiently write the cache by performing all the operations on the array when it remains in the cache.
 <br>
 </div>
+<br>
 <div>
 <br>4. Using SIMD (Data-Level-Parallelism) -- dns_tiling64_avx512.cpp <br>
 As a last step, I used SIMD using intrinsics.<br>
