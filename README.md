@@ -8,6 +8,7 @@ Because the elements of the array are stored in consecutive addresses, I thought
 Therefore, I replaced the original IJK method with the KIJ method.
 
 2. Multithreading with algorithm (Thread-Level-Parallelism) -- dns.cpp <br>
+<div>
 The second step is multi-threading. <br>
 I came up with the idea after studying Cannon and DNS algorithm from the textbook. 
 The algorithm is as follows. 
@@ -24,6 +25,7 @@ In the first step, one of the 16 divided A and B matrices in the upper left corn
 When 16 threads complete their respective operations, the threads join. 
 In the second step, I create 16 threads to do the operation located in the upper right corner of the picture and join them when finished. 
 The third and fourth steps follow a similar process, and then end the function.
+</div>
 
 3. Cache friendly multiplication (Tiling) -- dns_tiling64.cpp <br>
 The third step is tiling. <br>
